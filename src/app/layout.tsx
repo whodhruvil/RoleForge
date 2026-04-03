@@ -15,6 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "RoleForge AI | SaaS Resume Platform",
   description: "RoleForge AI is a SaaS platform for generating role-specific resumes from job URLs in minutes.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({
