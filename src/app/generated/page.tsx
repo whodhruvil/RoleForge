@@ -27,10 +27,11 @@ function formatCreatedAt(value: string | null) {
     return "Unknown date";
   }
   const date = new Date(value);
-  return date.toLocaleDateString(undefined, {
+  return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",
+    timeZone: "UTC",
   });
 }
 
@@ -107,7 +108,7 @@ export default function GeneratedPage() {
   }
 
   return (
-    <main className="app-shell-bg min-h-screen px-6 pb-8 pt-32">
+    <main className="app-shell-bg min-h-screen px-3 pb-8 pt-44 sm:px-6 md:pt-32">
       <AppShellHeader subtitle="Generated Resume Portfolio" />
       <div className="mx-auto w-full max-w-6xl space-y-6">
         <section className="grid gap-4 sm:grid-cols-3">

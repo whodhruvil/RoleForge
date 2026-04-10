@@ -23,11 +23,12 @@ export default function HistoryPage() {
         return;
       }
 
-      await fetch("/api/generations/enrich-company", {
+      setIsCheckingAuth(false);
+
+      // Run enrichment in background so page doesn't block on initial paint.
+      void fetch("/api/generations/enrich-company", {
         method: "POST",
       }).catch(() => null);
-
-      setIsCheckingAuth(false);
     };
 
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
@@ -47,7 +48,7 @@ export default function HistoryPage() {
   }
 
   return (
-    <main className="app-shell-bg min-h-screen px-6 pb-8 pt-32">
+    <main className="app-shell-bg min-h-screen px-3 pb-8 pt-44 sm:px-6 md:pt-32">
       <AppShellHeader subtitle="Generation Archive" />
       <div className="mx-auto w-full max-w-6xl space-y-6">
         <Card className="p-6">

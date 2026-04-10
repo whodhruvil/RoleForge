@@ -287,7 +287,7 @@ export default function SettingsPage() {
   }
 
   return (
-    <main className="app-shell-bg min-h-screen px-6 pb-8 pt-32">
+    <main className="app-shell-bg min-h-screen px-3 pb-8 pt-44 sm:px-6 md:pt-32">
       <AppShellHeader subtitle="Account & Workspace Config" />
       <div className="mx-auto w-full max-w-6xl space-y-7">
         <section className="space-y-6">

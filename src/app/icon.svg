@@ -1,13 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#1b2a4b" />
-      <stop offset="100%" stop-color="#090f1f" />
+      <stop offset="0%" stop-color="#141824" />
+      <stop offset="100%" stop-color="#090b12" />
+    </linearGradient>
+    <linearGradient id="tailark-mark" x1="32" y1="12" x2="32" y2="52">
+      <stop offset="0%" stop-color="#9B99FE" />
+      <stop offset="100%" stop-color="#2BC8B7" />
     </linearGradient>
   </defs>
-  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#bg)" stroke="#7dafff" stroke-width="2.5" />
+  <rect x="4" y="4" width="56" height="56" rx="14" fill="url(#bg)" stroke="#2a3144" stroke-width="2" />
   <path
-    d="M20 45V19h13.8c5.4 0 8.9 3.3 8.9 8.1 0 4.1-2.5 6.5-5.8 7.3L43 45h-6.8l-5.4-9.6h-4V45zM26 30.8h6.1c2.5 0 4-1.4 4-3.5 0-2.1-1.6-3.4-4-3.4H26z"
-    fill="#dceeff"
+    d="M18 12h6v40h-6V12Zm22 0h6v40h-6V12Zm12 6v6H12v-6h40ZM12 46v-6h40v6H12Z"
+    fill="url(#tailark-mark)"
   />
 </svg>

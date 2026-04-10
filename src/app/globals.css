@@ -1,36 +1,82 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base: #05070c;
-  --bg-surface: #0b1020;
-  --bg-card: rgba(15, 19, 32, 0.66);
-  --border-glass: rgba(141, 171, 255, 0.24);
-  --border-glow: rgba(110, 151, 255, 0.32);
-  --accent: #79a3ff;
-  --accent-dim: #5c86eb;
-  --accent-2: #41d8f6;
-  --text-primary: #f4f7ff;
-  --text-secondary: #b8c5e8;
-  --text-muted: #7787ac;
-  --glass-blur: blur(20px);
-  --glass-highlight: rgba(138, 166, 255, 0.1);
-  --danger: #f28b8b;
-  --background: var(--bg-base);
-  --foreground: var(--text-primary);
+  --background: #08090b;
+  --foreground: #f4f4f5;
+  --card: #111216;
+  --card-foreground: #f4f4f5;
+  --popover: #111216;
+  --popover-foreground: #f4f4f5;
+  --primary: #fafafa;
+  --primary-foreground: #09090b;
+  --secondary: #18181b;
+  --secondary-foreground: #f4f4f5;
+  --muted: #18181b;
+  --muted-foreground: #a1a1aa;
+  --accent: #1f2024;
+  --accent-foreground: #fafafa;
+  --destructive: #ef4444;
+  --destructive-foreground: #fafafa;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #3f3f46;
+
+  --bg-base: var(--background);
+  --bg-surface: #101114;
+  --bg-card: color-mix(in oklab, var(--card) 78%, transparent);
+  --border-glass: color-mix(in oklab, var(--border) 68%, #9ca3af 32%);
+  --border-glow: color-mix(in oklab, #9ca3af 70%, #52525b 30%);
+  --accent-dim: #d4d4d8;
+  --accent-2: #d4d4d8;
+  --text-primary: var(--foreground);
+  --text-secondary: #d4d4d8;
+  --text-muted: var(--muted-foreground);
+  --glass-highlight: color-mix(in oklab, #f4f4f5 12%, transparent);
+  --danger: var(--destructive);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
+* {
+  border-color: var(--border);
+}
+
+html,
 body {
-  background: var(--bg-base);
-  color: var(--text-primary);
-  font-family: var(--font-geist-sans), Inter, "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    sans-serif;
+  min-height: 100%;
+}
+
+body {
+  background-color: var(--bg-base);
+  background-image:
+    radial-gradient(circle at 16% 12%, rgba(255, 255, 255, 0.08), transparent 30%),
+    radial-gradient(circle at 84% 6%, rgba(161, 161, 170, 0.12), transparent 35%),
+    radial-gradient(circle at 52% 88%, rgba(113, 113, 122, 0.12), transparent 40%),
+    linear-gradient(180deg, #0c0d10 0%, #08090b 100%);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), Inter, "SF Pro Text", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   text-rendering: geometricPrecision;
 }
 
@@ -41,29 +87,24 @@ button,
 }
 
 .glass-card {
-  background: var(--bg-card);
-  backdrop-filter: var(--glass-blur);
+  background: color-mix(in oklab, var(--card) 72%, transparent);
+  backdrop-filter: blur(20px);
   border: 1px solid var(--border-glass);
   border-radius: 16px;
-  box-shadow: 0 14px 48px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(164, 186, 255, 0.12);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.48), inset 0 1px 0 var(--glass-highlight);
 }
 
 .glow-border {
-  box-shadow: 0 0 0 1px var(--border-glow), 0 0 30px rgba(121, 163, 255, 0.18);
+  box-shadow: 0 0 0 1px var(--border-glow), 0 0 34px rgba(161, 161, 170, 0.22);
 }
 
 .app-shell-bg {
-  background-color: var(--bg-base);
-  background-image:
-    radial-gradient(circle at 12% 12%, rgba(65, 216, 246, 0.12), transparent 32%),
-    radial-gradient(circle at 78% 10%, rgba(121, 163, 255, 0.18), transparent 34%),
-    radial-gradient(circle at 52% 86%, rgba(74, 109, 239, 0.12), transparent 38%),
-    linear-gradient(180deg, rgba(8, 13, 25, 0.85) 0%, rgba(5, 7, 12, 1) 100%);
+  background-color: transparent;
 }
 
 .input-glass {
   border: 1px solid var(--border-glass);
-  background: rgba(9, 12, 21, 0.8);
+  background: color-mix(in oklab, var(--card) 78%, transparent);
   color: var(--text-primary);
 }
 
@@ -72,59 +113,88 @@ button,
 }
 
 .input-glass:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px rgba(121, 163, 255, 0.42), 0 0 18px rgba(65, 216, 246, 0.16);
+  border-color: var(--ring);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--ring) 70%, transparent), 0 0 18px rgba(255, 255, 255, 0.1);
   outline: none;
 }
 
 .btn-accent {
-  border: 1px solid rgba(123, 166, 255, 0.68);
-  background: linear-gradient(125deg, #4f73ee 0%, #5f84fb 52%, #67a0ff 100%);
-  color: #f7f9ff;
-  box-shadow: 0 10px 24px rgba(23, 46, 131, 0.46), 0 1px 0 rgba(214, 228, 255, 0.18) inset;
+  border: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
+  background: linear-gradient(130deg, #fafafa 0%, #e4e4e7 52%, #d4d4d8 100%);
+  color: #09090b;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
 .btn-accent:hover {
-  background: linear-gradient(125deg, #4669e1 0%, #5578ef 52%, #5f94f5 100%);
+  background: linear-gradient(130deg, #f4f4f5 0%, #d4d4d8 52%, #a1a1aa 100%);
   transform: translateY(-1px);
 }
 
 .btn-ghost {
   border: 1px solid var(--border-glass);
-  background: rgba(9, 12, 21, 0.8);
+  background: color-mix(in oklab, var(--card) 75%, transparent);
   color: var(--text-primary);
 }
 
 .btn-ghost:hover {
-  border-color: rgba(121, 163, 255, 0.56);
-  background: rgba(14, 19, 32, 0.94);
-  color: #e2ebff;
+  border-color: color-mix(in oklab, var(--primary) 45%, var(--border) 55%);
+  background: color-mix(in oklab, var(--card) 90%, black 10%);
+  color: var(--text-primary);
 }
 
 .top-nav-link {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 2.25rem;
-  padding: 0 0.75rem;
-  border-radius: 0.6rem;
-  border: 1px solid transparent;
-  font-size: 0.8125rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  height: 2rem;
+  padding: 0;
+  border: 0;
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--text-secondary);
-  transition: all 180ms ease;
+  opacity: 0.86;
+  transition: color 180ms ease, opacity 180ms ease;
+}
+
+.top-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0));
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 180ms ease;
 }
 
 .top-nav-link:hover {
   color: var(--text-primary);
-  background: rgba(121, 163, 255, 0.1);
-  border-color: rgba(121, 163, 255, 0.3);
+  opacity: 1;
+}
+
+.top-nav-link:hover::after {
+  transform: scaleX(0.55);
 }
 
 .top-nav-link-active {
   color: var(--text-primary);
-  background: rgba(121, 163, 255, 0.18);
-  border-color: rgba(121, 163, 255, 0.42);
-  box-shadow: inset 0 1px 0 rgba(192, 216, 255, 0.2);
+  opacity: 1;
+}
+
+.top-nav-link-active::after {
+  transform: scaleX(1);
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }

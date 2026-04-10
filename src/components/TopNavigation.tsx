@@ -18,17 +18,29 @@ function isActive(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export default function TopNavigation() {
+type TopNavigationProps = {
+  orientation?: "horizontal" | "vertical";
+  onNavigate?: () => void;
+};
+
+export default function TopNavigation({ orientation = "horizontal", onNavigate }: TopNavigationProps) {
   const pathname = usePathname();
 
   return (
-    <nav className="flex items-center gap-1">
+    <nav
+      className={cn(
+        orientation === "horizontal"
+          ? "no-scrollbar flex max-w-[58vw] items-center gap-6 overflow-x-auto sm:max-w-none"
+          : "flex flex-col items-stretch gap-1",
+      )}
+    >
       {NAV_ITEMS.map((item) => {
         const active = isActive(pathname, item.href);
         return (
           <Link
             key={item.href}
             href={item.href}
+            onClick={onNavigate}
             className={cn("top-nav-link", active && "top-nav-link-active")}
           >
             {item.label}

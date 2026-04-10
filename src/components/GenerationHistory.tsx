@@ -195,7 +195,7 @@ export default function GenerationHistory({ limit = 10, showPageLink = false }: 
               <p className="truncate text-sm font-medium text-[var(--text-primary)]" title={row.job_url}>
                 {row.job_url}
               </p>
-              <p className="mt-1 text-xs text-[var(--text-muted)]">{formatRelativeTime(row.created_at)}</p>
+              <p suppressHydrationWarning className="mt-1 text-xs text-[var(--text-muted)]">{formatRelativeTime(row.created_at)}</p>
             </div>
 
             <div className="flex items-center gap-2">
