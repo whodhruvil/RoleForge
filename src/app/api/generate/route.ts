@@ -1,12 +1,17 @@
 import { NextResponse } from "next/server";
 import { createClient as createAdminClient } from "@supabase/supabase-js";
 import { getCompanyNameFromJobUrl } from "@/lib/company";
+import { extractTagsFromJobUrl, inferJdTitleFromJobUrl } from "@/lib/job-intelligence";
 import { isValidHttpUrl } from "@/lib/validation";
 import { createClient } from "../../../../lib/supabase/server";
 
 type GenerateBody = {
   job_url?: string;
 };
+
+function isMissingColumnError(code: string | undefined) {
+  return code === "42703" || code === "PGRST204";
+}
 
 export async function POST(request: Request) {
   try {
@@ -75,18 +80,34 @@ export async function POST(request: Request) {
       );
     }
 
+    const inferredTitle = inferJdTitleFromJobUrl(jobUrl);
+    const inferredTags = extractTagsFromJobUrl(jobUrl);
+    const inferredJdExcerpt =
+      inferredTags.length > 0
+        ? `Target role: ${inferredTitle}. Detected keywords: ${inferredTags.slice(0, 6).join(", ")}.`
+        : `Target role: ${inferredTitle}.`;
+
     let { data: generationRow, error: generationError } = await supabase
       .from("generations")
       .insert({
         user_id: user.id,
         job_url: jobUrl,
+        jd_url: jobUrl,
+        jd_title: inferredTitle,
+        jd_excerpt: inferredJdExcerpt,
+        matched_tags: inferredTags,
+        matched_skills: inferredTags,
+        new_skills_added: [],
+        resume_changes: [],
+        resume_before_summary: "Base resume submitted by the user before role-specific tailoring.",
+        resume_after_summary: null,
         status: "processing",
         company_name: getCompanyNameFromJobUrl(jobUrl),
       })
       .select("id")
       .single();
 
-    if (generationError?.code === "42703") {
+    if (isMissingColumnError(generationError?.code)) {
       const fallback = await supabase
         .from("generations")
         .insert({
@@ -101,7 +122,19 @@ export async function POST(request: Request) {
     }
 
     if (generationError || !generationRow?.id) {
-      return NextResponse.json({ error: "Failed to create generation job." }, { status: 500 });
+      return NextResponse.json(
+        {
+          error: "Failed to create generation job.",
+          details: generationError
+            ? {
+                code: generationError.code ?? null,
+                message: generationError.message ?? null,
+                hint: generationError.hint ?? null,
+              }
+            : null,
+        },
+        { status: 500 },
+      );
     }
 
     const generationId = generationRow.id;
